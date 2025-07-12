@@ -197,7 +197,7 @@ model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 print(f"Accuracy: {accuracy_score(y_test, y_pred):.2f}")
 print("\nClassification report:\n", classification_report(y_test, y_pred))
-[7/12, 01:22] MApeSA: import requests
+import requests
 
 # Query parameters
 query = "Oklahoma City Thunder"
@@ -218,7 +218,7 @@ for i, post in enumerate(posts, 1):
     link = post.get('full_link', '')
     print(f"{i}. {title} (r/{subreddit})")
     print(f"   {link}\n")
-[7/12, 01:25] MApeSA: ! pip install requests vaderSentiment
+! pip install requests vaderSentiment
 import requests
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
@@ -256,7 +256,7 @@ elif average_score < 0:
 else:
     summary = "neutral"
 print("\nAggregate sentiment:", summary)
-[7/12, 01:26] MApeSA: ! pip install google-api-python-client pytube
+! pip install google-api-python-client pytube
 import os
 from googleapiclient.discovery import build
 from pytube import YouTube
@@ -307,7 +307,7 @@ def main():
         download_video(videos[0]['video_id'])
     else:
         print("No videos found.")
-[7/12, 01:28] MApeSA: ! pip install opencv-python moviepy pillow torch openai
+! pip install opencv-python moviepy pillow torch openai
 
 import os
 import requests
@@ -361,7 +361,7 @@ reply = response.choices[0].message.content
 
 print("\nGPT-4 Analysis and Sentiment Summary:")
 print(reply)
-[7/12, 01:33] MApeSA: ! pip install python-telegram-bot requests pandas scikit-learn vaderSentiment openai
+! pip install python-telegram-bot requests pandas scikit-learn vaderSentiment openai
 import os
 import requests
 import pandas as pd
