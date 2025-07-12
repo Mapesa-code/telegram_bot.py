@@ -1,4 +1,4 @@
-[7/12, 01:21] MApeSA: import requests
+import requests
 import pandas as pd
 from datetime import datetime, timedelta
 
