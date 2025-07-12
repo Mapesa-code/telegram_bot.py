@@ -218,7 +218,6 @@ for i, post in enumerate(posts, 1):
     link = post.get('full_link', '')
     print(f"{i}. {title} (r/{subreddit})")
     print(f"   {link}\n")
-! pip install requests vaderSentiment
 import requests
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
@@ -255,8 +254,7 @@ elif average_score < 0:
     summary = "negative"
 else:
     summary = "neutral"
-print("\nAggregate sentiment:", summary)
-! pip install google-api-python-client pytube
+print("\nAggregate sentiment:", summary) 
 import os
 from googleapiclient.discovery import build
 from pytube import YouTube
@@ -307,8 +305,6 @@ def main():
         download_video(videos[0]['video_id'])
     else:
         print("No videos found.")
-! pip install opencv-python moviepy pillow torch openai
-
 import os
 import requests
 import openai
@@ -361,7 +357,6 @@ reply = response.choices[0].message.content
 
 print("\nGPT-4 Analysis and Sentiment Summary:")
 print(reply)
-! pip install python-telegram-bot requests pandas scikit-learn vaderSentiment openai
 import os
 import requests
 import pandas as pd
