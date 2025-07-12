@@ -1,3 +1,4 @@
+
 import requests
 import pandas as pd
 from datetime import datetime, timedelta
@@ -197,6 +198,7 @@ model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 print(f"Accuracy: {accuracy_score(y_test, y_pred):.2f}")
 print("\nClassification report:\n", classification_report(y_test, y_pred))
+
 import requests
 
 # Query parameters
@@ -218,6 +220,7 @@ for i, post in enumerate(posts, 1):
     link = post.get('full_link', '')
     print(f"{i}. {title} (r/{subreddit})")
     print(f"   {link}\n")
+
 import requests
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
@@ -254,7 +257,8 @@ elif average_score < 0:
     summary = "negative"
 else:
     summary = "neutral"
-print("\nAggregate sentiment:", summary) 
+print("\nAggregate sentiment:", summary)
+
 import os
 from googleapiclient.discovery import build
 from pytube import YouTube
@@ -305,58 +309,71 @@ def main():
         download_video(videos[0]['video_id'])
     else:
         print("No videos found.")
-import os
+
 import requests
 import openai
 
 # --- CONFIGURATION ---
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "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")
+OPENAI_API_KEY = "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"
 openai.api_key = OPENAI_API_KEY
+
+REDDIT_API_KEY = "yMDHFEMGGDJjcgiFgdOC3G4Ax6um-Q"  # Your Reddit API Key (if applicable)
 
 # --- 1. Fetch Reddit posts about Oklahoma City Thunder ---
 query = "Oklahoma City Thunder"
 limit = 10
 url = f"https://api.pushshift.io/reddit/search/submission/?q={query}&size={limit}&sort=desc"
-response = requests.get(url)
+
+# Optional: Include the Reddit API key in the headers if the endpoint requires it
+headers = {
+    "Authorization": f"Bearer {REDDIT_API_KEY}"
+}
+
+response = requests.get(url, headers=headers)
+
+# Print the response for debugging
+print(response.json())  # Added for debugging purposes
+
 posts = response.json().get("data", [])
 
 # --- 2. Prepare the content for GPT-4 ---
 if not posts:
-    raise Exception("No Reddit posts found.")
+    print("No Reddit posts found. Please try a different query or check the API.")
+else:
+    post_texts = []
+    for post in posts:
+        title = post.get("title", "[No Title]")
+        selftext = post.get("selftext", "")
+        # Use title + selftext if available, else just title
+        if selftext and selftext.lower() != "[removed]":
+            post_texts.append(f"Title: {title}\nText: {selftext}")
+        else:
+            post_texts.append(f"Title: {title}")
 
-post_texts = []
-for post in posts:
-    title = post.get("title", "[No Title]")
-    selftext = post.get("selftext", "")
-    # Use title + selftext if available, else just title
-    if selftext and selftext.lower() != "[removed]":
-        post_texts.append(f"Title: {title}\nText: {selftext}")
-    else:
-        post_texts.append(f"Title: {title}")
+    conversation = [
+        {
+            "role": "system",
+            "content": "You are a helpful assistant. Analyze the following Reddit posts about the Oklahoma City Thunder. Summarize the overall sentiment in one word: positive, negative, or neutral. Also briefly summarize the main themes of the posts."
+        },
+        {
+            "role": "user",
+            "content": "\n\n".join(post_texts)
+        }
+    ]
 
-conversation = [
-    {
-        "role": "system",
-        "content": "You are a helpful assistant. Analyze the following Reddit posts about the Oklahoma City Thunder. Summarize the overall sentiment in one word: positive, negative, or neutral. Also briefly summarize the main themes of the posts."
-    },
-    {
-        "role": "user",
-        "content": "\n\n".join(post_texts)
-    }
-]
+    # --- 3. Send to GPT-4 for sentiment and summary ---
+    response = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=conversation,
+        max_tokens=300,
+        temperature=0.2
+    )
 
-# --- 3. Send to GPT-4 for sentiment and summary ---
-response = openai.ChatCompletion.create(  # Changed from completions to ChatCompletion
-    model="gpt-4",  # Corrected model name
-    messages=conversation,
-    max_tokens=300,
-    temperature=0.2
-)
+    reply = response.choices[0].message.content
 
-reply = response.choices[0].message.content
+    print("\nGPT-4 Analysis and Sentiment Summary:")
+    print(reply)
 
-print("\nGPT-4 Analysis and Sentiment Summary:")
-print(reply)
 import os
 import requests
 import pandas as pd
