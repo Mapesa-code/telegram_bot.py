@@ -3,4 +3,4 @@ pandas
 python-telegram-bot
 vaderSentiment
 openai
-train-test-split
+sklearn
