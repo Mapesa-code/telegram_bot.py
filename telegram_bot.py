@@ -121,7 +121,7 @@ if missing_columns:
     print(f"Missing columns: {missing_columns}")
 else:
     # Your operation here
-    pass print(f"Saved {len(df)} teams to {filename}")
+    pass print(df.to_csv(filename, index=False)
 
 if __name__ == "__main__":
     teams = fetch_all_teams(API_KEY)
