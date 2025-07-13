@@ -1,5 +1,5 @@
 
-!pip install requests pandas
+
 import requests
 import pandas as pd
 from datetime import datetime, timedelta
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     games = fetch_last_30_days_scores()
     save_to_csv(games)
 
-!pip install pandas scikit-learn
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
@@ -244,7 +244,7 @@ for i, post in enumerate(posts, 1):
     link = post.get('full_link', '')
     print(f"{i}. {title} (r/{subreddit})")
     print(f"   {link}\n")
-! pip install requests vaderSentiment
+
 import requests
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
@@ -311,7 +311,7 @@ def download_video(video_id):
         print(f"Downloaded: {video_id}.mp4")
     else:
         print("No MP4 stream found")
-! pip install opencv-python moviepy pillow torch openai
+
 
 import requests
 import openai
@@ -376,7 +376,7 @@ else:
 
     print("\nGPT-4 Analysis and Sentiment Summary:")
     print(reply)
-! pip install python-telegram-bot requests pandas scikit-learn vaderSentiment openai
+
 import os
 import requests
 import pandas as pd
