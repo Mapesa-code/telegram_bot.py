@@ -1,10 +1,11 @@
 
+!pip install requests pandas
 import requests
 import pandas as pd
 from datetime import datetime, timedelta
 
 API_KEY = "861c2d372b8a409b9db663cb0bc08dbc"
-BASE_URL = "https://api.sportsdata.io/v3/nba/scores/json/ScoresBasicFinal"
+BASE_URL = "https://api.sportsdata.io/v3/nba/scores/json/GamesByDateFinal/2025-01-31?"
 
 def fetch_scores_for_date(date_str):
     url = f"{BASE_URL}/{date_str}"
@@ -45,6 +46,8 @@ def save_to_csv(games, filename="nba_scores_last_30_days.csv"):
 if __name__ == "__main__":
     games = fetch_last_30_days_scores()
     save_to_csv(games)
+
+!pip install pandas scikit-learn
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
@@ -90,6 +93,27 @@ print("\nClassification Report:\n", classification_report(y_test, y_pred))
 # Optional: Check model coefficients
 coef_df = pd.DataFrame({'feature': features, 'coefficient': model.coef_[0]})
 print("\nModel coefficients:\n", coef_df)
+
+import requests
+import pandas as pd
+
+API_KEY = "861c2d372b8a409b9db663cb0bc08dbc"
+BASE_URL = "https://api.sportsdata.io/v3/nba/scores/json/AllTeams"
+
+def fetch_all_teams(api_key):
+    params = {"key": api_key}
+    response = requests.get(BASE_URL, params=params)
+    response.raise_for_status()
+    return response.json()
+
+def save_teams_to_csv(teams, filename="nba_teams.csv"):
+    df = pd.DataFrame(teams)
+    df.to_csv(filename, index=False)
+    print(f"Saved {len(df)} teams to {filename}")
+
+if __name__ == "__main__":
+    teams = fetch_all_teams(API_KEY)
+    save_teams_to_csv(teams)
 import pandas as pd
 import requests
 from sklearn.model_selection import train_test_split
@@ -220,7 +244,7 @@ for i, post in enumerate(posts, 1):
     link = post.get('full_link', '')
     print(f"{i}. {title} (r/{subreddit})")
     print(f"   {link}\n")
-
+! pip install requests vaderSentiment
 import requests
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
@@ -258,43 +282,10 @@ elif average_score < 0:
 else:
     summary = "neutral"
 print("\nAggregate sentiment:", summary)
-
+! pip install google-api-python-client pytube
 import os
 from googleapiclient.discovery import build
 from pytube import YouTube
-
-def get_youtube_videos(api_key, query, max_results=10):
-    youtube = build('youtube', 'v3', developerKey=api_key)
-
-    request = youtube.search().list(
-        part='id,snippet',
-        q=query,
-        type='video',
-        order='date',
-        maxResults=max_results
-    )
-    response = request.execute()
-
-    videos = []
-    for item in response['items']:
-        videos.append({
-            'title': item['snippet']['title'],
-            'video_id': item['id']['videoId']
-        })
-
-    return videos
-
-def download_video(video_id):
-    url = f'https://www.youtube.com/watch?v={video_id}'
-    yt = YouTube(url)
-
-    if yt.streams.filter(file_extension='mp4'):
-        stream = yt.streams.filter(file_extension='mp4').first()
-        stream.download(filename=f"{video_id}.mp4")
-        print(f"Downloaded: {video_id}.mp4")
-    else:
-        print("No MP4 stream found")
-
 def main():
     api_key = 'AIzaSyAbTk3dh42inDAQZ7-OYsWXiMRfLcbCKmM'  # Your YouTube API key
     query = "NBA highlights"
@@ -309,6 +300,18 @@ def main():
         download_video(videos[0]['video_id'])
     else:
         print("No videos found.")
+
+def download_video(video_id):
+    url = f'https://www.youtube.com/watch?v={video_id}'
+    yt = YouTube(url)
+
+    if yt.streams.filter(file_extension='mp4'):
+        stream = yt.streams.filter(file_extension='mp4').first()
+        stream.download(filename=f"{video_id}.mp4")
+        print(f"Downloaded: {video_id}.mp4")
+    else:
+        print("No MP4 stream found")
+! pip install opencv-python moviepy pillow torch openai
 
 import requests
 import openai
@@ -373,7 +376,7 @@ else:
 
     print("\nGPT-4 Analysis and Sentiment Summary:")
     print(reply)
-
+! pip install python-telegram-bot requests pandas scikit-learn vaderSentiment openai
 import os
 import requests
 import pandas as pd
