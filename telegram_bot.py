@@ -76,7 +76,9 @@ features = [
 
 X = df[features]
 y = df['HomeWin']
+
 import train_test_split
+from sklearn.model_selection
 # --- Train/test split ---
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
@@ -215,9 +217,6 @@ features = [
 ]
 X = games[features].fillna(0)
 y = games['HomeWin']
-
-
-import train_test_split
 
 X_train, X_test, y_train, y_tuest = train_test_split(X, y, test_size=0.2, random_state=42)
 model = LogisticRegression(max_iter=1000)
