@@ -111,7 +111,17 @@ def fetch_all_teams(api_key):
 def save_teams_to_csv(teams, filename="nba_teams.csv"):
     df = pd.DataFrame(teams)
     df.to_csv(filename, index=False)
-    print(f"Saved {len(df)} teams to {filename}")
+
+    # Check if expected columns are present
+    expected_columns = ['Home_AvgPoints', 'Home_AvgAssists', 'Home_AvgRebounds', 'Home_AvgSteals', 'Home_AvgBlocks', 'Home_AvgTurnovers', 'Away_AvgPoints', 'Away_AvgAssists', 'Away_AvgRebounds', 'Away_AvgSteals', 'Away_AvgBlocks', 'Away_AvgTurnovers']
+
+    # Identify missing columns
+missing_columns = [col for col in expected_columns if col not in df.columns]
+if missing_columns:
+    print(f"Missing columns: {missing_columns}")
+else:
+    # Your operation here
+    pass print(f"Saved {len(df)} teams to {filename}")
 
 if __name__ == "__main__":
     teams = fetch_all_teams(API_KEY)
