@@ -282,7 +282,7 @@ elif average_score < 0:
 else:
     summary = "neutral"
 print("\nAggregate sentiment:", summary)
-! pip install google-api-python-client pytube
+
 import os
 from googleapiclient.discovery import build
 from pytube import YouTube
