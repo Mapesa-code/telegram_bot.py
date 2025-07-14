@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-SPORTS_API_KEY = os.getenv("SPORTS_API_KEY")
+SPORTS_API_KEY = os.getenv("861c2d372b8a409b9db663cb0bc08dbc")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 REDDIT_API_KEY = os.getenv("REDDIT_API_KEY")
