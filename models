@@ -1,0 +1,19 @@
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+def train_model(data_path):
+    df = pd.read_csv(data_path)
+    df = df[(df['HomeTeamScore'].notnull()) & (df['AwayTeamScore'].notnull())]
+    df['HomeWin'] = (df['HomeTeamScore'] > df['AwayTeamScore']).astype(int)
+
+    features = [...]  # Put your full feature list here
+    X = df[features].fillna(0)
+    y = df['HomeWin']
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+    model = LogisticRegression(max_iter=1000)
+    model.fit(X_train, y_train)
+    print(f"Accuracy: {accuracy_score(y_test, model.predict(X_test)):.2f}")
+    return model
